@@ -63,7 +63,6 @@ namespace Player
         private float _objDist;
         private Quaternion lookRot;
         
-        //        public Transform Marker;
         private void Awake()
         {
             // Initialize needed components
@@ -75,7 +74,7 @@ namespace Player
             _input.Player.Movement.performed += OnMovementInput;
         }
         
-        void OnMovementInput(InputAction.CallbackContext context)
+        private void OnMovementInput(InputAction.CallbackContext context)
         {
             _movementInputVector = context.ReadValue<Vector2>();
             _movementOutputVector = CameraTransformForward * _movementInputVector.y + CameraTransformRight * _movementInputVector.x;
@@ -101,6 +100,7 @@ namespace Player
         //Velocity movement toward pickup parent and rotation
         private void FixedUpdate()
         {
+
             if (_heldObj != null)
             {
                 _objDist = Vector3.Distance(holdPoint.position, _pickupRb.position);
@@ -118,7 +118,7 @@ namespace Player
  
         }
         
-        void Update()
+        private void Update()
         {
             _isGrounded = Physics.CheckSphere(groundCheckOrigin.position, groundCheckRad, groundMask);
             
@@ -127,7 +127,7 @@ namespace Player
             //Rotate player to move
             //gameObject.transform.forward = Vector3.Scale(CameraTransformForward, new Vector3(1, 0, 1));
             
-            Debug.Log(_isGrounded);
+
             // Changes the height position of the player..
             if (_input.Player.Jump.GetButtonDown() && _isGrounded)
             {
@@ -140,9 +140,7 @@ namespace Player
             
             Interact();
 
-            //if (_heldObj != null) Marker.transform.position = _heldObj.transform.position;
-            
-            if (_heldObj != null) { _trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, MainCamera.transform.forward * shootForce, _heldObj.transform.rotation); }
+            if (_heldObj != null) { _trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, MainCamera.transform.forward * shootForce + CharController.velocity, _heldObj.transform.rotation); }
             else { _trajectory.CancelTrajectory(); }
             
             Throw();
@@ -152,8 +150,10 @@ namespace Player
                 playerCamera.Priority = 0;
                 groupCamera.Priority = 10;
             }
-            else if (_input.Player.Aim.GetButtonUp())
+
+            if (_input.Player.Aim.GetButtonUp())
             {
+                Debug.Log("Up");
                 playerCamera.Priority = 10;
                 groupCamera.Priority = 0;
             }
@@ -192,7 +192,7 @@ namespace Player
             
             BreakConnection();
             
-            obj.AddForce(MainCamera.transform.forward * shootForce, false);
+            obj.AddForce(MainCamera.transform.forward * shootForce + CharController.velocity, false);
         }
         
         private void Interact()
