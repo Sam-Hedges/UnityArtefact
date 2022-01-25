@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,11 +12,10 @@ namespace Player
         private readonly Dictionary<Transform, Transform> _spawnedObjects = new Dictionary<Transform, Transform>();
         private PhysicsObject _currentObj;
         private int _currentObjID;
-
-        public Transform Marker;
+        
         [SerializeField] private Transform environmentParent; // Empty object that contains all obstacles to be accounted for
         [SerializeField] private LineRenderer lineRenderer;
-        [SerializeField] private int maxIterations;
+        [SerializeField] private int maxSteps;
         
         private void Start()
         {
@@ -67,10 +65,6 @@ namespace Player
 
                 _currentObj = InitSimObj(obj.gameObject, position, quaternion.identity).GetComponent<PhysicsObject>();
             }
-            
-
-            //var currentObj = Instantiate(obj, position, rot);
-            //SceneManager.MoveGameObjectToScene(_currentObj.gameObject, _simScene);
 
             _currentObj.transform.position = obj.transform.position;
             _currentObj.GetComponent<Rigidbody>().velocity = obj.GetComponent<Rigidbody>().velocity;
@@ -78,13 +72,12 @@ namespace Player
             _currentObj.GetComponent<Rigidbody>().angularVelocity = obj.GetComponent<Rigidbody>().angularVelocity;
             _currentObj.AddForce(velocity, true);
 
-            lineRenderer.positionCount = maxIterations;
+            lineRenderer.positionCount = maxSteps;
 
-            for (int i = 0; i < maxIterations; i++)
+            for (int i = 0; i < maxSteps; i++)
             {
                 _phyScene.Simulate(Time.fixedDeltaTime);
                 lineRenderer.SetPosition(i, _currentObj.transform.position);
-                if (i == 0) Marker.position = _currentObj.transform.position;
             }
         }
 
