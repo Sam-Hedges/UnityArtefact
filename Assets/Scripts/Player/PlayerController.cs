@@ -43,10 +43,10 @@ namespace Player
         [Header("Interaction")]
         [SerializeField] private float sphereCastRadius = 0.5f;
         [SerializeField] private int interactLayerIndex = 3;
+        [SerializeField] private Trajectory trajectory;
         private Vector3 _rayPos;
         private GameObject _lookObj;
         private PhysicsObject _physicsObject;
-        private Trajectory _trajectory;
 
         [Header("Pickup")] 
         [SerializeField] private Transform holdPoint;
@@ -67,8 +67,7 @@ namespace Player
         {
             // Initialize needed components
             _input = new PlayerInput();
-            _trajectory = GetComponent<Trajectory>();
-            
+
             _input.Player.Movement.started += OnMovementInput;
             _input.Player.Movement.canceled += OnMovementInput;
             _input.Player.Movement.performed += OnMovementInput;
@@ -140,8 +139,8 @@ namespace Player
             
             Interact();
 
-            if (_heldObj != null) { _trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, MainCamera.transform.forward * shootForce + CharController.velocity, _heldObj.transform.rotation); }
-            else { _trajectory.CancelTrajectory(); }
+            if (_heldObj != null) { trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, MainCamera.transform.forward * shootForce + CharController.velocity, _heldObj.transform.rotation); }
+            else { trajectory.CancelTrajectory(); }
             
             Throw();
 

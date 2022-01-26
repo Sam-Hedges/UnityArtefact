@@ -4,7 +4,140 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="407f0a58-7595-49eb-9603-f32ebbfcfcfe" name="Changes" comment="" />
+    <list default="true" id="407f0a58-7595-49eb-9603-f32ebbfcfcfe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnityArtefact/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/InputSystem.inputsettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem.inputsettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/InputSystem.inputsettings.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem.inputsettings.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/Backboard.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/Backboard.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/Backboard.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/Backboard.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BackboardRim.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BackboardRim.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BackboardRim.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BackboardRim.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BaksetballNet.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BaksetballNet.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BaksetballNet.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BaksetballNet.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrail.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrail.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrail.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrail.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrajectory.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrajectory.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrajectory.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BallTrajectory.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/Basketball 1.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/Basketball 1.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/Basketball.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/Basketball.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/Basketball.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/Basketball.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BasketballHoop.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BasketballHoop.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/BasketballHoop.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/BasketballHoop.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/MetalSupport.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/MetalSupport.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Baksetball/MetalSupport.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Baksetball/MetalSupport.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Environment.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Environment.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Environment.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Environment.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Skybox_Mat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Skybox_Mat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Basketball Hoop.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Basketball Hoop.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Basketball Hoop.obj.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Basketball Hoop.obj.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/BasketballNet.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/BasketballNet.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/BasketballNet.obj.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/BasketballNet.obj.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Physics Materials.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Physics Materials.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Physics Materials/Backboard.physicMaterial" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Physics Materials/Backboard.physicMaterial" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Physics Materials/Backboard.physicMaterial.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Physics Materials/Backboard.physicMaterial.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Physics Materials/Basketball.physicMaterial" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Physics Materials/Basketball.physicMaterial" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Physics Materials/Basketball.physicMaterial.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Physics Materials/Basketball.physicMaterial.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Ball.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Ball.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Ball.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Ball.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Basketball Hoop.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Basketball Hoop.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Basketball Hoop.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Basketball Hoop.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/AudioCompressedInMemory.preset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/AudioCompressedInMemory.preset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/AudioCompressedInMemory.preset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/AudioCompressedInMemory.preset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/AudioStreaming.preset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/AudioStreaming.preset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/AudioStreaming.preset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/AudioStreaming.preset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/Defaults.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/Defaults.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/Defaults/AlbedoTexture_Default.preset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/Defaults/AlbedoTexture_Default.preset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/Defaults/AlbedoTexture_Default.preset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/Defaults/AlbedoTexture_Default.preset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/Defaults/AudioDecompressOnLoad.preset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/Defaults/AudioDecompressOnLoad.preset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/Defaults/AudioDecompressOnLoad.preset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/Defaults/AudioDecompressOnLoad.preset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/Defaults/DirectionalLight_Default.preset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/Defaults/DirectionalLight_Default.preset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/Defaults/DirectionalLight_Default.preset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/Defaults/DirectionalLight_Default.preset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/NormalTexture.preset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/NormalTexture.preset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/NormalTexture.preset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/NormalTexture.preset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/UtilityTexture.preset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/UtilityTexture.preset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Presets/UtilityTexture.preset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Presets/UtilityTexture.preset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Main Camera Blends.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Main Camera Blends.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Main Camera Blends.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Main Camera Blends.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PhysicsObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PhysicsObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PhysicsObject.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PhysicsObject.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/InputActionButtonExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/InputActionButtonExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/InputActionButtonExtensions.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/InputActionButtonExtensions.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/InputManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/InputManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.inputactions.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.inputactions.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Trajectory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Trajectory.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/ForwardRenderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/ForwardRenderer.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/ForwardRenderer.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/ForwardRenderer.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP-HighQuality.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP-HighQuality.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP-HighQuality.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP-HighQuality.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP-LowQuality.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP-LowQuality.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP-LowQuality.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP-LowQuality.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP-MediumQuality.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP-MediumQuality.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP-MediumQuality.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP-MediumQuality.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/Basketball.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Basketball.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/Basketball/Basketball.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Basketball/Basketball.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/Basketball/BasketballGreyscale.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Basketball/BasketballGreyscale.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/Basketball/BasketballNet.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Basketball/BasketballNet.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/Basketball/BasketballNormal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/Basketball/BasketballNormal.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/circle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/circle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0-prev.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/Packages-Update.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/Packages-Update.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ClusterInputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ClusterInputManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/NavMeshAreas.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/NavMeshAreas.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PresetManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PresetManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/VersionControlSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/VersionControlSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/XRSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/XRSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Search.settings" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Search.settings" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,6 +203,7 @@
       <option name="presentableId" value="Default" />
       <updated>1643061976973</updated>
       <workItem from="1643061993690" duration="6508000" />
+      <workItem from="1643214526925" duration="2872000" />
     </task>
     <servers />
   </component>

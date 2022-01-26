@@ -12,6 +12,7 @@ public class PhysicsObject : MonoBehaviour
     [HideInInspector] public PlayerController playerInteractions;
     private bool _simulated;
     private Rigidbody _rb;
+    [SerializeField] private Trajectory trajectory;
 
     private void Awake()
     {
@@ -23,11 +24,24 @@ public class PhysicsObject : MonoBehaviour
         _simulated = simulated;
         _rb.AddForce(velocity, ForceMode.Impulse);
     }
-    
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (_simulated)
+        {
+            trajectory.CollisionDetected(collision.gameObject.CompareTag("Target"));
+            return;
+        } 
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (_simulated) return; 
-        
+        if (_simulated)
+        {
+            trajectory.CollisionDetected(false);
+            return;
+        }
+
         if(pickedUp)
         {
             if(collision.relativeVelocity.magnitude > breakForce)

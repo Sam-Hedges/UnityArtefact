@@ -12,10 +12,13 @@ namespace Player
         private readonly Dictionary<Transform, Transform> _spawnedObjects = new Dictionary<Transform, Transform>();
         private PhysicsObject _currentObj;
         private int _currentObjID;
+        private bool _objCollided;
         
         [SerializeField] private Transform environmentParent; // Empty object that contains all obstacles to be accounted for
         [SerializeField] private LineRenderer lineRenderer;
         [SerializeField] private int maxSteps;
+        [SerializeField] private Gradient hitColour;
+        [SerializeField] private Gradient missColour;
         
         private void Start()
         {
@@ -50,7 +53,8 @@ namespace Player
         
         public void SimulateTrajectory(PhysicsObject obj, Vector3 position, Vector3 velocity, quaternion rot)
         {
-
+            bool disableLineRenderer = false;
+            
             if (_currentObj == null)
             {
                 _currentObjID = obj.GetInstanceID();
@@ -73,14 +77,38 @@ namespace Player
             _currentObj.AddForce(velocity, true);
 
             lineRenderer.positionCount = maxSteps;
-
+            _objCollided = false;
+            
             for (int i = 0; i < maxSteps; i++)
             {
                 _phyScene.Simulate(Time.fixedDeltaTime);
-                lineRenderer.SetPosition(i, _currentObj.transform.position);
+                if (_objCollided && !disableLineRenderer)
+                {
+                    lineRenderer.positionCount = i;
+                    disableLineRenderer = true;
+                }
+                else if (!_objCollided)
+                {
+                    lineRenderer.SetPosition(i, _currentObj.transform.position);
+                }
+
             }
         }
-
+        
+        public void CollisionDetected(bool isTarget)
+        {
+            if (isTarget)
+            {
+                lineRenderer.colorGradient = hitColour;
+            }
+            else
+            {
+                lineRenderer.colorGradient = missColour;
+            }
+            
+            _objCollided = true;
+        }
+        
         private GameObject InitSimObj(GameObject obj, Vector3 position, Quaternion rotation)
         {
             GameObject simObj = Instantiate(obj, position, rotation);   // Instantiate duplicate obj's
