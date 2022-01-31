@@ -1,37 +1,47 @@
-using System;
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player
 {
-    [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
         // Reference Variables
-        private PlayerInput _input;
-        private CharacterController CharController => GetComponent<CharacterController>();
-        private Camera MainCamera => Camera.main;
-        
-        
-        //Camera Directions
-        private Vector3 CameraTransformForward => ScaleCameraTransform(MainCamera.transform.forward);
-        private Vector3 CameraTransformRight => ScaleCameraTransform(MainCamera.transform.right);
-        private Vector3 ScaleCameraTransform(Vector3 cameraTransform)
+        private CharacterController _charController;
+
+        [Header("Camera")]
+        [SerializeField] private Camera mainCamera;
+        [SerializeField] private GameObject playerCameraHelper;
+        [SerializeField] private GameObject groupCameraHelper;
+        private static CinemachineVirtualCamera _playerCamera;
+        private static CinemachineVirtualCamera _groupCamera;
+        private static Vector3 CameraTransformForward => ScaleCameraTransform(_playerCamera.transform.forward);
+        private static Vector3 CameraTransformRight => ScaleCameraTransform(_playerCamera.transform.right);
+        private static Vector3 ScaleCameraTransform(Vector3 cameraTransform)
         {
             return Vector3.Scale(cameraTransform.normalized, new Vector3(1, 0, 1));
         }
-
-        [SerializeField] private CinemachineVirtualCamera playerCamera;
-        [SerializeField] private CinemachineVirtualCamera groupCamera;
         
-        // Player input related variables
-        private Vector2 _movementInputVector;
-        private Vector3 _movementOutputVector;
-        private bool _isMovementPressed;
+        // Input
+        private PlayerInput _input;
+        private struct IMovement
+        {
+            public Vector2 MovementInputVector;
+            public Vector3 MovementOutputVector => CameraTransformForward * MovementInputVector.y + CameraTransformRight * MovementInputVector.x;
+            public bool IsMovementPressed => MovementInputVector != Vector2.zero;
+        }
+        private struct Look
+        {
+            public Vector2 LookInputVector;
+            public Vector3 LookOutputVector;
+            public bool IsLookPressed => LookInputVector != Vector2.zero;
+        }
         
-        private bool _isGrounded;
+        private IMovement _iMovement;
+        private Look _iLook;
+        
+        
+        private bool IsGrounded => Physics.CheckSphere(groundCheckOrigin.position, groundCheckRad, groundMask);
         private Vector3 _velocity;
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float groundCheckRad = 0.5f;
@@ -62,44 +72,54 @@ namespace Player
         private float _objVelocity;
         private float _objDist;
         private Quaternion lookRot;
-        
-        private void Awake()
+
+        private void InitializeInput()
         {
-            // Initialize needed components
             _input = new PlayerInput();
 
             _input.Player.Movement.started += OnMovementInput;
             _input.Player.Movement.canceled += OnMovementInput;
             _input.Player.Movement.performed += OnMovementInput;
+
+            _input.Player.Look.started += OnLookInput;
+            _input.Player.Look.canceled += OnLookInput;
+            _input.Player.Look.performed += OnLookInput;
         }
-        
-        private void OnMovementInput(InputAction.CallbackContext context)
+        private void OnMovementInput(InputAction.CallbackContext context) { _iMovement.MovementInputVector = context.ReadValue<Vector2>(); }
+        private void OnLookInput(InputAction.CallbackContext context) { _iLook.LookInputVector = context.ReadValue<Vector2>(); }
+        private void InitializeCameras()
         {
-            _movementInputVector = context.ReadValue<Vector2>();
-            _movementOutputVector = CameraTransformForward * _movementInputVector.y + CameraTransformRight * _movementInputVector.x;
-            _isMovementPressed = _movementInputVector != Vector2.zero;
+            _playerCamera = playerCameraHelper.GetComponent<CinemachineVirtualCamera>();
+            _groupCamera = groupCameraHelper.GetComponent<CinemachineVirtualCamera>();
         }
 
+        #region Unity Event Methods
+        
+        private void Awake()
+        {
+            if(mainCamera == null) { mainCamera = Camera.main; }
+
+            _charController = GetComponent<CharacterController>();
+            
+            InitializeInput();
+            
+            InitializeCameras();
+        }
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
         private void OnEnable()
         {
             _input.Player.Enable();
         }
-
         private void OnDisable()
         {
             _input.Player.Disable();
         }
-        
-        //Velocity movement toward pickup parent and rotation
         private void FixedUpdate()
         {
-
             if (_heldObj != null)
             {
                 _objDist = Vector3.Distance(holdPoint.position, _pickupRb.position);
@@ -110,77 +130,76 @@ namespace Player
                 _pickupRb.velocity = direction.normalized * _objVelocity;
                 
                 // Rotation
-                lookRot = Quaternion.LookRotation(MainCamera.transform.position - _pickupRb.position);
-                lookRot = Quaternion.Slerp(MainCamera.transform.rotation, lookRot, rotSpeed * Time.fixedDeltaTime);
+                lookRot = Quaternion.LookRotation(mainCamera.transform.position - _pickupRb.position);
+                lookRot = Quaternion.Slerp(mainCamera.transform.rotation, lookRot, rotSpeed * Time.fixedDeltaTime);
                 _pickupRb.MoveRotation(lookRot);
             }
- 
         }
-        
         private void Update()
         {
-            _isGrounded = Physics.CheckSphere(groundCheckOrigin.position, groundCheckRad, groundMask);
-            
             Movement(playerSpeed);
-            
-            //Rotate player to move
-            //gameObject.transform.forward = Vector3.Scale(CameraTransformForward, new Vector3(1, 0, 1));
-            
 
-            // Changes the height position of the player..
-            if (_input.Player.Jump.GetButtonDown() && _isGrounded)
-            {
-                Debug.Log("Jump");
-                _velocity.y += Mathf.Sqrt(playerJumpHeight * -3.0f * gravityStrength);
-            }
+            Jump();
             
-
             Gravity();
             
             Interact();
 
-            if (_heldObj != null) { trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, MainCamera.transform.forward * shootForce + CharController.velocity, _heldObj.transform.rotation); }
+            if (_heldObj != null) { trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, mainCamera.transform.forward * shootForce + _charController.velocity, _heldObj.transform.rotation); }
             else { trajectory.CancelTrajectory(); }
             
             Throw();
 
             if (_input.Player.Aim.GetButtonDown())
             {
-                playerCamera.Priority = 0;
-                groupCamera.Priority = 10;
+                _playerCamera.Priority = 0;
+                _groupCamera.Priority = 10;
             }
 
             if (_input.Player.Aim.GetButtonUp())
             {
-                Debug.Log("Up");
-                playerCamera.Priority = 10;
-                groupCamera.Priority = 0;
+                _playerCamera.Priority = 10;
+                _groupCamera.Priority = 0;
             }
         }
+        
+        #endregion
+        
+        #region Movement Methods
         
         // Applies movement to the player character based on the players input
         private void Movement(float speed)
         {
-            // Adjust movement for camera
-            _movementOutputVector = CameraTransformForward * _movementInputVector.y + CameraTransformRight * _movementInputVector.x;
-            
             // Calculate final movement Vector
-            Vector3 moveDirection = Vector3.ClampMagnitude(_movementOutputVector, 1f) * speed * Time.deltaTime;
+            Vector3 moveDirection = Vector3.ClampMagnitude(_iMovement.MovementOutputVector, 1f) * speed * Time.deltaTime;
             
             // Inputs the final movement vector to the character controller component
-            CharController.Move(moveDirection);
+            _charController.Move(moveDirection);
         }
         
         // Adds the force of the gravity over time to the vertical axis of the player so they get pulled down
         private void Gravity()
         {
-            if (!_isGrounded) { _velocity.y += gravityStrength * Time.deltaTime; }   // if the player is not grounded increase the vertical velocity
-            else if (_isGrounded && _velocity.y < 0f) { _velocity.y = -2f; }         // if the player is grounded reset the velocity
+            if (!IsGrounded) { _velocity.y += gravityStrength * Time.deltaTime; }   // if the player is not grounded increase the vertical velocity
+            else if (IsGrounded && _velocity.y < 0f) { _velocity.y = -2f; }         // if the player is grounded reset the velocity
 
             // applies the new velocity vector to the character controller
-            CharController.Move(_velocity * Time.deltaTime);
+            _charController.Move(_velocity * Time.deltaTime);
         }
 
+        private void Jump()
+        {
+            // Changes the height position of the player..
+            if (_input.Player.Jump.GetButtonDown() && IsGrounded)
+            {
+                _velocity.y += Mathf.Sqrt(playerJumpHeight * -3.0f * gravityStrength);
+            }
+        }
+        
+        #endregion
+        
+        #region Interaction Methods
+        
         private void Throw()
         {
             if (_heldObj == null ) return; 
@@ -191,7 +210,7 @@ namespace Player
             
             BreakConnection();
             
-            obj.AddForce(MainCamera.transform.forward * shootForce + CharController.velocity, false);
+            obj.AddForce(mainCamera.transform.forward * shootForce + _charController.velocity, false);
         }
         
         private void Interact()
@@ -236,9 +255,9 @@ namespace Player
         
         private GameObject CastForObject()
         {
-            _rayPos = MainCamera.ScreenToWorldPoint(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
-            RaycastHit hit;
-            if (Physics.SphereCast(_rayPos, sphereCastRadius, MainCamera.transform.forward, out hit, maxDist,
+            _rayPos = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
+
+            if (Physics.SphereCast(_rayPos, sphereCastRadius, mainCamera.transform.forward, out RaycastHit hit, maxDist,
                     1 << interactLayerIndex))
             {
                 return hit.collider.transform.root.gameObject;
@@ -246,5 +265,7 @@ namespace Player
 
             return null;
         }
+        
+        #endregion
     }
 }
