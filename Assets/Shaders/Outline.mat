@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Outline
+  m_Name: Outline
   m_Shader: {fileID: -6465566751694194690, guid: 6497d50ffcca32a46907458c897a59cf, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
