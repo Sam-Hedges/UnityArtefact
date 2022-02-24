@@ -169,7 +169,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""6cbde7b0-181b-4938-bdf3-05c05abcb485"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.1,y=0.1)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,

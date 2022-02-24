@@ -18,23 +18,24 @@ namespace Player
         private static CinemachineVirtualCamera _currentCamera;
         private static Vector3 CameraTransformForward => ScaleCameraTransform(_currentCamera.transform.forward);
         private static Vector3 CameraTransformRight => ScaleCameraTransform(_currentCamera.transform.right);
-        private static Vector3 ScaleCameraTransform(Vector3 cameraTransform)
-        {
-            return Vector3.Scale(cameraTransform.normalized, new Vector3(1, 0, 1));
+        private static Vector3 ScaleCameraTransform(Vector3 cameraTransform) {
+            cameraTransform.y = 0.0f;
+            cameraTransform.Normalize();
+            return cameraTransform;
         }
         private float xRot;
         private float yRot;
         
         // Input
         private PlayerInput _input;
-        private struct IMovement
-        {
+        private struct IMovement {
+            
             public Vector2 MovementInputVector;
-            public Vector3 MovementOutputVector => CameraTransformForward * MovementInputVector.y + CameraTransformRight * MovementInputVector.x;
+            public Vector3 MovementOutputVector => ScaleCameraTransform(_currentCamera.transform.forward) * MovementInputVector.y + CameraTransformRight * MovementInputVector.x;
             public bool IsPressed => MovementInputVector != Vector2.zero;
         }
-        private struct ILook
-        {
+        private struct ILook {
+            
             public Vector2 LookInputVector;
             public Vector3 LookOutputVector;
             public bool IsPressed => LookInputVector != Vector2.zero;
@@ -42,8 +43,7 @@ namespace Player
         
         private IMovement _iMovement;
         private ILook _iLook;
-        
-        
+
         private bool IsGrounded => Physics.CheckSphere(groundCheckOrigin.position, groundCheckRad, groundMask);
         private Vector3 _velocity;
         [SerializeField] private LayerMask groundMask;
@@ -74,8 +74,8 @@ namespace Player
         private float _objDist;
         private Quaternion lookRot;
 
-        private void InitializeInput()
-        {
+        private void InitializeInput() {
+            
             _input = new PlayerInput();
 
             _input.Player.Movement.started += OnMovementInput;
@@ -88,8 +88,7 @@ namespace Player
         }
         private void OnMovementInput(InputAction.CallbackContext context) { _iMovement.MovementInputVector = context.ReadValue<Vector2>(); }
         private void OnLookInput(InputAction.CallbackContext context) { _iLook.LookInputVector = context.ReadValue<Vector2>(); }
-        private void InitializeCameras()
-        {
+        private void InitializeCameras() {
             _playerCamera = playerCameraHelper.GetComponent<CinemachineVirtualCamera>();
             _groupCamera = groupCameraHelper.GetComponent<CinemachineVirtualCamera>();
             _currentCamera = _playerCamera;
@@ -97,8 +96,8 @@ namespace Player
 
         #region Unity Event Methods
         
-        private void Awake()
-        {
+        private void Awake() {
+            
             if(mainCamera == null) { mainCamera = Camera.main; }
 
             _charController = GetComponent<CharacterController>();
@@ -107,23 +106,19 @@ namespace Player
             
             InitializeCameras();
         }
-        private void Start()
-        {
+        private void Start() {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-        private void OnEnable()
-        {
+        private void OnEnable() {
             _input.Player.Enable();
         }
-        private void OnDisable()
-        {
+        private void OnDisable() {
             _input.Player.Disable();
         }
         private void FixedUpdate()
         {
-            if (_heldObj != null)
-            {
+            if (_heldObj != null) {
                 _objDist = Vector3.Distance(holdPoint.position, _pickupRb.position);
                 _objVelocity = Mathf.SmoothStep(minSpeed, maxSpeed, _objDist / interactDist);
                 _objVelocity *= Time.fixedDeltaTime;
@@ -137,8 +132,8 @@ namespace Player
                 _pickupRb.MoveRotation(lookRot);
             }
         }
-        private void Update()
-        {
+        private void Update() {
+            
             Rotate();
 
             Movement(playerSpeed);
@@ -154,40 +149,38 @@ namespace Player
             
             Throw();
 
-            if (_input.Player.Aim.GetButtonDown())
-            {
+            if (_input.Player.Aim.GetButtonDown()) {
                 _playerCamera.Priority = 0;
                 _groupCamera.Priority = 10;
                 _currentCamera = _groupCamera;
             }
 
-            if (_input.Player.Aim.GetButtonUp())
-            {
+            if (_input.Player.Aim.GetButtonUp()) {
                 _playerCamera.Priority = 10;
                 _groupCamera.Priority = 0;
                 _currentCamera = _playerCamera;
             }
+            
+            Throw();
         }
         
         #endregion
         
         #region Movement Methods
         
-        private void Rotate()
-        {
-            xRot -= Mathf.Clamp(_iLook.LookInputVector.y * 100f * Time.deltaTime, -90f, 90f);
+        private void Rotate() {
+            
+            xRot -= _iLook.LookInputVector.y * 100f * Time.deltaTime;
+            xRot = Mathf.Clamp(xRot,-90f, 90f);
             yRot += _iLook.LookInputVector.x * 100f * Time.deltaTime;
 
             _playerCamera.transform.localRotation = Quaternion.Euler(xRot, 0, 0);
 
             transform.rotation = Quaternion.Euler(0, yRot, 0);
-
-            Debug.Log(_iLook.LookInputVector);
         }
 
         // Applies movement to the player character based on the players input
-        private void Movement(float speed)
-        {
+        private void Movement(float speed) {
             // Calculate final movement Vector
             Vector3 moveDirection = Vector3.ClampMagnitude(_iMovement.MovementOutputVector, 1f) * speed * Time.deltaTime;
             
@@ -196,8 +189,8 @@ namespace Player
         }
         
         // Adds the force of the gravity over time to the vertical axis of the player so they get pulled down
-        private void Gravity()
-        {
+        private void Gravity() {
+            
             if (!IsGrounded) { _velocity.y += gravityStrength * Time.deltaTime; }   // if the player is not grounded increase the vertical velocity
             else if (IsGrounded && _velocity.y < 0f) { _velocity.y = -2f; }         // if the player is grounded reset the velocity
 
@@ -205,8 +198,7 @@ namespace Player
             _charController.Move(_velocity * Time.deltaTime);
         }
 
-        private void Jump()
-        {
+        private void Jump() {
             // Changes the height position of the player..
             if (_input.Player.Jump.GetButtonDown() && IsGrounded)
             {
@@ -218,8 +210,8 @@ namespace Player
         
         #region Interaction Methods
         
-        private void Throw()
-        {
+        private void Throw() {
+            
             if (_heldObj == null ) return; 
             
             if (!_input.Player.Fire.GetButtonDown()) return; 
@@ -231,21 +223,17 @@ namespace Player
             obj.AddForce(_playerCamera.transform.forward * shootForce + _charController.velocity, false);
         }
         
-        private void Interact()
-        {
+        private void Interact() {
+            
             if (_heldObj == null) { _lookObj = CastForObject(); }
 
-            if (_input.Player.Interact.GetButtonDown())
-            {
-                if (_heldObj == null)
-                {
-                    if (_lookObj != null)
-                    {
+            if (_input.Player.Interact.GetButtonDown()) {
+                if (_heldObj == null) {
+                    if (_lookObj != null) {
                         PickUpObj();
                     }
                 }
-                else
-                {
+                else {
                     BreakConnection();
                 }
             }
@@ -253,8 +241,8 @@ namespace Player
             if (_heldObj != null && _objDist > interactDist) { BreakConnection(); }
         }
 
-        private void PickUpObj()
-        {
+        private void PickUpObj() {
+            
             _physicsObject = _lookObj.GetComponentInChildren<PhysicsObject>();
             _heldObj = _lookObj;
             _pickupRb = _heldObj.GetComponent<Rigidbody>();
@@ -263,16 +251,16 @@ namespace Player
             StartCoroutine(_physicsObject.PickUp());
         }
 
-        public void BreakConnection()
-        {
+        public void BreakConnection() {
+            
             _pickupRb.constraints = RigidbodyConstraints.None;
             _objDist = 0;
             _physicsObject.pickedUp = false;
             _heldObj = null;
         }
         
-        private GameObject CastForObject()
-        {
+        private GameObject CastForObject() {
+            
             _rayPos = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
 
             if (Physics.SphereCast(_rayPos, sphereCastRadius, mainCamera.transform.forward, out RaycastHit hit, interactDist, 1 << interactLayerIndex)) {
@@ -286,9 +274,9 @@ namespace Player
                 return castObj;
             }
             
-            _lookObj.GetComponent<Interactable>().ToggleOutline(true);
+            if (_lookObj != null) { _lookObj.GetComponent<Interactable>().ToggleOutline(true); }
             
-            return _lookObj;
+            return null;
         }
         
         #endregion

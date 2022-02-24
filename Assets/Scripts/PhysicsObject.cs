@@ -13,6 +13,7 @@ public class PhysicsObject : MonoBehaviour
     private bool _simulated;
     private Rigidbody _rb;
     [SerializeField] private Trajectory trajectory;
+    [SerializeField] private ScoreManager scoreManager;
 
     private void Awake()
     {
@@ -31,9 +32,12 @@ public class PhysicsObject : MonoBehaviour
         {
             trajectory.CollisionDetected(collision.gameObject.CompareTag("Target"));
             return;
-        } 
-    }
+        }
 
+        if (!_simulated) {
+            scoreManager.AddScore(collision.gameObject.tag, _rb.velocity);
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (_simulated)
