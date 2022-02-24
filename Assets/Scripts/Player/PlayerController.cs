@@ -143,12 +143,19 @@ namespace Player
             Gravity();
             
             Interact();
-
-            if (_heldObj != null) { trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, _playerCamera.transform.forward * shootForce + _charController.velocity, _heldObj.transform.rotation); }
-            else { trajectory.CancelTrajectory(); }
             
+            /*
+            if (_heldObj != null) {
+                trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, _playerCamera.transform.forward * shootForce + _charController.velocity, _heldObj.transform.rotation);
+            }
+            else { trajectory.CancelTrajectory(); }
+            */
             Throw();
-
+            
+            if (_heldObj != null && _currentCamera == _groupCamera) {
+                trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, _playerCamera.transform.forward * shootForce + _charController.velocity, _heldObj.transform.rotation);
+            }
+            
             if (_input.Player.Aim.GetButtonDown()) {
                 _playerCamera.Priority = 0;
                 _groupCamera.Priority = 10;
@@ -159,6 +166,8 @@ namespace Player
                 _playerCamera.Priority = 10;
                 _groupCamera.Priority = 0;
                 _currentCamera = _playerCamera;
+                
+                trajectory.CancelTrajectory();
             }
             
             Throw();

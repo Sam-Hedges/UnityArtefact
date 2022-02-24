@@ -30,7 +30,7 @@ public class PhysicsObject : MonoBehaviour
     {
         if (_simulated)
         {
-            trajectory.CollisionDetected(collision.gameObject.CompareTag("Target"));
+            trajectory.CollisionDetected(collision.gameObject.CompareTag("Home") || collision.gameObject.CompareTag("Away"), _rb.velocity);
             return;
         }
 
@@ -42,7 +42,7 @@ public class PhysicsObject : MonoBehaviour
     {
         if (_simulated)
         {
-            trajectory.CollisionDetected(false);
+            trajectory.CollisionDetected(false, Vector3.zero);
             return;
         }
 

@@ -95,9 +95,9 @@ namespace Player
             }
         }
         
-        public void CollisionDetected(bool isTarget)
+        public void CollisionDetected(bool isTarget, Vector3 velocity)
         {
-            if (isTarget)
+            if (isTarget && velocity.y < 0)
             {
                 lineRenderer.colorGradient = hitColour;
             }
