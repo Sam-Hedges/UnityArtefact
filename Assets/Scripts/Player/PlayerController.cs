@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using UnityEngine.InputSystem;
 
 namespace Player
@@ -40,16 +41,26 @@ namespace Player
             public Vector3 LookOutputVector;
             public bool IsPressed => LookInputVector != Vector2.zero;
         }
-        
         private IMovement _iMovement;
         private ILook _iLook;
 
+        private Rigidbody rb;
+        [SerializeField] private float rideHeight = 1.2f;
+        [SerializeField] private float rideSpringStrength = 2000f;
+        [SerializeField] private float rideSpringDamper = 100f;
+        [SerializeField] private float maxSpeed = 8f;
+        [SerializeField] private float acceleration = 200f;
+        [SerializeField] private AnimationCurve accelerationFactor;
+        [SerializeField] private float maxAcceleration = 150;
+        [SerializeField] private AnimationCurve maxAccelerationFactor;
+        [SerializeField] private Vector3 forceScale;
+        private Vector3 _unitGoal;
+        private Vector3 _goalVel;
         private bool IsGrounded => Physics.CheckSphere(groundCheckOrigin.position, groundCheckRad, groundMask);
         private Vector3 _velocity;
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float groundCheckRad = 0.5f;
         [SerializeField] private Transform groundCheckOrigin;
-        [SerializeField] private float playerSpeed = 2.0f;
         [SerializeField] private float playerJumpHeight = 1.0f;
         [SerializeField] private float gravityStrength = -9.81f;
 
@@ -67,9 +78,9 @@ namespace Player
 
         [Header("ObjectMovement")] 
         [SerializeField] private float shootForce = 1000f;
-        [SerializeField] private float minSpeed;
-        [SerializeField] private float maxSpeed = 300f;
-        [SerializeField] private float rotSpeed = 100f;
+        [SerializeField] private float objMinSpeed;
+        [SerializeField] private float objMaxSpeed = 300f;
+        [SerializeField] private float objRotSpeed = 100f;
         private float _objVelocity;
         private float _objDist;
         private Quaternion lookRot;
@@ -100,7 +111,9 @@ namespace Player
             
             if(mainCamera == null) { mainCamera = Camera.main; }
 
-            _charController = GetComponent<CharacterController>();
+            //_charController = GetComponent<CharacterController>();
+
+            rb = GetComponent<Rigidbody>();
             
             InitializeInput();
             
@@ -118,42 +131,49 @@ namespace Player
         }
         private void FixedUpdate()
         {
-            if (_heldObj != null) {
-                _objDist = Vector3.Distance(holdPoint.position, _pickupRb.position);
-                _objVelocity = Mathf.SmoothStep(minSpeed, maxSpeed, _objDist / interactDist);
-                _objVelocity *= Time.fixedDeltaTime;
+            if (_heldObj != null) { UpdateHeldObject(); }
+
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, rideHeight + 1)) {
+                Vector3 velocity = rb.velocity;
+                Vector3 rayDirection = transform.TransformDirection(0, -1, 0);
+
+                Vector3 otherVelocity = Vector3.zero;
+                Rigidbody hitRigidbody = hit.rigidbody;
+                if (hitRigidbody != null) {
+                    otherVelocity = hitRigidbody.velocity;
+                }
+
+                float rayDirectionVelocity = Vector3.Dot(rayDirection, velocity);
+                float otherDirectionVelocity = Vector3.Dot(rayDirection, otherVelocity);
+
+                float relativeVelocity = rayDirectionVelocity - otherDirectionVelocity;
+
+                float x = hit.distance - rideHeight;
+
+                float springForce = (x * rideSpringStrength) - (relativeVelocity * rideSpringDamper);
+
+                Debug.DrawLine(transform.position, transform.position + (-transform.up * (rideHeight + 1)), Color.red);
                 
-                Vector3 direction = holdPoint.position - _pickupRb.position;
-                _pickupRb.velocity = direction.normalized * _objVelocity;
-                
-                // Rotation
-                lookRot = Quaternion.LookRotation(mainCamera.transform.position - _pickupRb.position);
-                lookRot = Quaternion.Slerp(mainCamera.transform.rotation, lookRot, rotSpeed * Time.fixedDeltaTime);
-                _pickupRb.MoveRotation(lookRot);
+                rb.AddForce(rayDirection * springForce);
             }
+            
+            Ride();
+            
+            Rotate();
+            
+            Movement();
         }
         private void Update() {
             
-            Rotate();
 
-            Movement(playerSpeed);
+            //Jump();
 
-            Jump();
-            
-            Gravity();
-            
             Interact();
             
-            /*
-            if (_heldObj != null) {
-                trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, _playerCamera.transform.forward * shootForce + _charController.velocity, _heldObj.transform.rotation);
-            }
-            else { trajectory.CancelTrajectory(); }
-            */
             Throw();
             
             if (_heldObj != null && _currentCamera == _groupCamera) {
-                trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, _playerCamera.transform.forward * shootForce + _charController.velocity, _heldObj.transform.rotation);
+                trajectory.SimulateTrajectory(_physicsObject, _heldObj.transform.localPosition, _playerCamera.transform.forward * shootForce + rb.velocity, _heldObj.transform.rotation);
             }
             
             if (_input.Player.Aim.GetButtonDown()) {
@@ -169,19 +189,33 @@ namespace Player
                 
                 trajectory.CancelTrajectory();
             }
-            
-            Throw();
         }
         
         #endregion
         
         #region Movement Methods
+
+        private void Ride() {
+            Quaternion currentRotation = transform.rotation;
+            Quaternion rotationTarget =
+                ShortestRotation(Quaternion.LookRotation(transform.forward, transform.up), currentRotation);
+
+            Vector3 rotationAxis;
+            float rotationDegrees;
+            
+            rotationTarget.ToAngleAxis(out rotationDegrees, out rotationAxis);
+            rotationAxis.Normalize();
+
+            float rotationRadians = rotationDegrees * Mathf.Deg2Rad;
+            
+            rb.AddTorque((rotationAxis * (rotationRadians * 500)) - (rb.angularVelocity * 100));
+        }
         
         private void Rotate() {
             
-            xRot -= _iLook.LookInputVector.y * 100f * Time.deltaTime;
+            xRot -= _iLook.LookInputVector.y * 100f * Time.fixedDeltaTime;
             xRot = Mathf.Clamp(xRot,-90f, 90f);
-            yRot += _iLook.LookInputVector.x * 100f * Time.deltaTime;
+            yRot += _iLook.LookInputVector.x * 100f * Time.fixedDeltaTime;
 
             _playerCamera.transform.localRotation = Quaternion.Euler(xRot, 0, 0);
 
@@ -189,22 +223,24 @@ namespace Player
         }
 
         // Applies movement to the player character based on the players input
-        private void Movement(float speed) {
+        private void Movement() {
             // Calculate final movement Vector
-            Vector3 moveDirection = Vector3.ClampMagnitude(_iMovement.MovementOutputVector, 1f) * speed * Time.deltaTime;
-            
-            // Inputs the final movement vector to the character controller component
-            _charController.Move(moveDirection);
-        }
-        
-        // Adds the force of the gravity over time to the vertical axis of the player so they get pulled down
-        private void Gravity() {
-            
-            if (!IsGrounded) { _velocity.y += gravityStrength * Time.deltaTime; }   // if the player is not grounded increase the vertical velocity
-            else if (IsGrounded && _velocity.y < 0f) { _velocity.y = -2f; }         // if the player is grounded reset the velocity
+            Vector3 moveDirection = Vector3.ClampMagnitude(_iMovement.MovementOutputVector, 1f);
 
-            // applies the new velocity vector to the character controller
-            _charController.Move(_velocity * Time.deltaTime);
+            _unitGoal = moveDirection;
+
+            Vector3 unitVel = _goalVel.normalized;
+            float velDot = Vector3.Dot(_unitGoal, unitVel);
+            float accel = acceleration * accelerationFactor.Evaluate(velDot);
+            Vector3 goalVel = _unitGoal * maxSpeed;
+            _goalVel = Vector3.MoveTowards(_goalVel, goalVel, accel * Time.fixedDeltaTime);
+
+            Vector3 targetAccel = (_goalVel - rb.velocity) / Time.fixedDeltaTime;
+            float maxAccel = maxAcceleration * maxAccelerationFactor.Evaluate(velDot);
+            targetAccel = Vector3.ClampMagnitude(targetAccel, maxAccel);
+            rb.AddForce(Vector3.Scale(targetAccel * rb.mass, forceScale));
+            
+
         }
 
         private void Jump() {
@@ -218,6 +254,20 @@ namespace Player
         #endregion
         
         #region Interaction Methods
+
+        private void UpdateHeldObject() {
+            _objDist = Vector3.Distance(holdPoint.position, _pickupRb.position);
+            _objVelocity = Mathf.SmoothStep(objMinSpeed, objMaxSpeed, _objDist / interactDist);
+            _objVelocity *= Time.fixedDeltaTime;
+                
+            Vector3 direction = holdPoint.position - _pickupRb.position;
+            _pickupRb.velocity = direction.normalized * _objVelocity;
+                
+            // Rotation
+            lookRot = Quaternion.LookRotation(mainCamera.transform.position - _pickupRb.position);
+            lookRot = Quaternion.Slerp(mainCamera.transform.rotation, lookRot, objRotSpeed * Time.fixedDeltaTime);
+            _pickupRb.MoveRotation(lookRot);
+        }
         
         private void Throw() {
             
@@ -229,7 +279,7 @@ namespace Player
             
             BreakConnection();
             
-            obj.AddForce(_playerCamera.transform.forward * shootForce + _charController.velocity, false);
+            obj.AddForce(_playerCamera.transform.forward * shootForce + rb.velocity, false);
         }
         
         private void Interact() {
@@ -289,5 +339,20 @@ namespace Player
         }
         
         #endregion
+        
+        private static Quaternion ShortestRotation(Quaternion to, Quaternion from)
+        {
+            if (Quaternion.Dot(to, from) < 0)
+            {
+                return to * Quaternion.Inverse(Multiply(from, -1));
+            }
+
+            else return to * Quaternion.Inverse(from);
+        }
+        
+        private static Quaternion Multiply(Quaternion input, float scalar)
+        {
+            return new Quaternion(input.x * scalar, input.y * scalar, input.z * scalar, input.w * scalar);
+        }
     }
 }
