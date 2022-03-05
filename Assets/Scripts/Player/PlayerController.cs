@@ -1,15 +1,11 @@
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using UnityEngine.InputSystem;
 
 namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        // Reference Variables
-        private CharacterController _charController;
-
         [Header("Camera")]
         [SerializeField] private Camera mainCamera;
         [SerializeField] private GameObject playerCameraHelper;
@@ -44,6 +40,7 @@ namespace Player
         private IMovement _iMovement;
         private ILook _iLook;
 
+        [HideInInspector] public Vector3 upTransform;
         private Rigidbody rb;
         [SerializeField] private float rideHeight = 1.2f;
         [SerializeField] private float rideSpringStrength = 2000f;
@@ -111,8 +108,8 @@ namespace Player
             
             if(mainCamera == null) { mainCamera = Camera.main; }
 
-            //_charController = GetComponent<CharacterController>();
-
+            upTransform = transform.up;
+            
             rb = GetComponent<Rigidbody>();
             
             InitializeInput();
@@ -133,9 +130,9 @@ namespace Player
         {
             if (_heldObj != null) { UpdateHeldObject(); }
 
-            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, rideHeight + 1)) {
+            if (Physics.Raycast(transform.position, -upTransform, out RaycastHit hit, rideHeight + 1)) {
                 Vector3 velocity = rb.velocity;
-                Vector3 rayDirection = transform.TransformDirection(0, -1, 0);
+                Vector3 rayDirection = -upTransform;
 
                 Vector3 otherVelocity = Vector3.zero;
                 Rigidbody hitRigidbody = hit.rigidbody;
@@ -152,14 +149,14 @@ namespace Player
 
                 float springForce = (x * rideSpringStrength) - (relativeVelocity * rideSpringDamper);
 
-                Debug.DrawLine(transform.position, transform.position + (-transform.up * (rideHeight + 1)), Color.red);
+                Debug.DrawLine(transform.position, transform.position + (-upTransform * (rideHeight + 1)), Color.red);
                 
                 rb.AddForce(rayDirection * springForce);
             }
             
-            Ride();
+            RotateToUpright();
             
-            Rotate();
+            RotateCamera();
             
             Movement();
         }
@@ -195,10 +192,10 @@ namespace Player
         
         #region Movement Methods
 
-        private void Ride() {
+        private void RotateToUpright() {
             Quaternion currentRotation = transform.rotation;
             Quaternion rotationTarget =
-                ShortestRotation(Quaternion.LookRotation(transform.forward, transform.up), currentRotation);
+                ShortestRotation(Quaternion.LookRotation(transform.forward, upTransform), currentRotation);
 
             Vector3 rotationAxis;
             float rotationDegrees;
@@ -211,7 +208,7 @@ namespace Player
             rb.AddTorque((rotationAxis * (rotationRadians * 500)) - (rb.angularVelocity * 100));
         }
         
-        private void Rotate() {
+        private void RotateCamera() {
             
             xRot -= _iLook.LookInputVector.y * 100f * Time.fixedDeltaTime;
             xRot = Mathf.Clamp(xRot,-90f, 90f);
