@@ -40,7 +40,13 @@ namespace Player
         private IMovement _iMovement;
         private ILook _iLook;
 
-        [HideInInspector] public Vector3 upTransform;
+        [HideInInspector] public struct LocalTransform
+        {
+            public Vector3 up;
+            public Vector3 forward;
+            public Vector3 right;
+        }
+        [HideInInspector] public LocalTransform localTransform;
         private Rigidbody rb;
         [SerializeField] private float rideHeight = 1.2f;
         [SerializeField] private float rideSpringStrength = 2000f;
@@ -102,15 +108,22 @@ namespace Player
             _currentCamera = _playerCamera;
         }
 
+        private void InitializeLocalTransform() {
+            Transform t = transform;
+            localTransform.up = t.up;
+            localTransform.forward = t.forward;
+            localTransform.right = t.right;
+        }
+        
         #region Unity Event Methods
         
         private void Awake() {
             
             if(mainCamera == null) { mainCamera = Camera.main; }
 
-            upTransform = transform.up;
-            
             rb = GetComponent<Rigidbody>();
+            
+            InitializeLocalTransform();
             
             InitializeInput();
             
@@ -130,29 +143,7 @@ namespace Player
         {
             if (_heldObj != null) { UpdateHeldObject(); }
 
-            if (Physics.Raycast(transform.position, -upTransform, out RaycastHit hit, rideHeight + 1)) {
-                Vector3 velocity = rb.velocity;
-                Vector3 rayDirection = -upTransform;
-
-                Vector3 otherVelocity = Vector3.zero;
-                Rigidbody hitRigidbody = hit.rigidbody;
-                if (hitRigidbody != null) {
-                    otherVelocity = hitRigidbody.velocity;
-                }
-
-                float rayDirectionVelocity = Vector3.Dot(rayDirection, velocity);
-                float otherDirectionVelocity = Vector3.Dot(rayDirection, otherVelocity);
-
-                float relativeVelocity = rayDirectionVelocity - otherDirectionVelocity;
-
-                float x = hit.distance - rideHeight;
-
-                float springForce = (x * rideSpringStrength) - (relativeVelocity * rideSpringDamper);
-
-                Debug.DrawLine(transform.position, transform.position + (-upTransform * (rideHeight + 1)), Color.red);
-                
-                rb.AddForce(rayDirection * springForce);
-            }
+            RigidbodyRide();
             
             RotateToUpright();
             
@@ -160,6 +151,8 @@ namespace Player
             
             Movement();
         }
+        
+
         private void Update() {
             
 
@@ -192,10 +185,36 @@ namespace Player
         
         #region Movement Methods
 
+        private void RigidbodyRide() {
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, rideHeight + 1)) {
+                Vector3 velocity = rb.velocity;
+                Vector3 rayDirection = -transform.up;
+
+                Vector3 otherVelocity = Vector3.zero;
+                Rigidbody hitRigidbody = hit.rigidbody;
+                if (hitRigidbody != null) {
+                    otherVelocity = hitRigidbody.velocity;
+                }
+
+                float rayDirectionVelocity = Vector3.Dot(rayDirection, velocity);
+                float otherDirectionVelocity = Vector3.Dot(rayDirection, otherVelocity);
+
+                float relativeVelocity = rayDirectionVelocity - otherDirectionVelocity;
+
+                float x = hit.distance - rideHeight;
+
+                float springForce = (x * rideSpringStrength) - (relativeVelocity * rideSpringDamper);
+
+                Debug.DrawLine(transform.position, transform.position + (-transform.up * (rideHeight + 1)), Color.red);
+
+                rb.AddForce(rayDirection * springForce);
+            }
+        }
+        
         private void RotateToUpright() {
             Quaternion currentRotation = transform.rotation;
             Quaternion rotationTarget =
-                ShortestRotation(Quaternion.LookRotation(transform.forward, upTransform), currentRotation);
+                ShortestRotation(Quaternion.LookRotation(transform.forward, transform.up), currentRotation);
 
             Vector3 rotationAxis;
             float rotationDegrees;

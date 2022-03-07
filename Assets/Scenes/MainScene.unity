@@ -4261,6 +4261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 933912233}
   - component: {fileID: 933912231}
+  - component: {fileID: 933912235}
   - component: {fileID: 933912234}
   - component: {fileID: 933912232}
   m_Layer: 2
@@ -4285,7 +4286,6 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   playerCameraHelper: {fileID: 2098151595}
   groupCameraHelper: {fileID: 1480146574}
-  upTransform: {x: 0, y: 0, z: 0}
   rideHeight: 1.2
   rideSpringStrength: 2000
   rideSpringDamper: 100
@@ -4423,6 +4423,20 @@ CapsuleCollider:
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &933912235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933912230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad14e6c7a0d0084fbc95a87f828b8d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityStrength: 9.81
+  debugVector: {x: 0, y: 0, z: 0}
 --- !u!43 &1012954507
 Mesh:
   m_ObjectHideFlags: 0
@@ -6294,26 +6308,13 @@ GameObject:
   - component: {fileID: 1462662633}
   - component: {fileID: 1462662632}
   - component: {fileID: 1462662631}
-  - component: {fileID: 1462662630}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Gravity Volume 2
-  m_TagString: Untagged
+  m_TagString: GravityZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1462662630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462662629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82921d1fa987fff46a223f12cf5b1f74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1462662631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6356,7 +6357,7 @@ Transform:
   m_LocalScale: {x: 4.8084, y: 4.8084, z: 4.8084}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1477052632
 GameObject:
@@ -6452,62 +6453,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480146574}
-  m_LocalRotation: {x: 0.27205032, y: -0.25609854, z: 0.07536046, w: 0.9245123}
+  m_LocalRotation: {x: 0.20935975, y: -0.33985618, z: 0.07788414, w: 0.9135646}
   m_LocalPosition: {x: 0, y: 5.35, z: -7.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 114458085}
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1496319720
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1496319722}
-  - component: {fileID: 1496319721}
-  m_Layer: 0
-  m_Name: Gravity Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1496319721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496319720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad14e6c7a0d0084fbc95a87f828b8d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 933912231}
-  gravityStrength: 9.81
-  gravityVolumes:
-  - {fileID: 1588290682}
-  - {fileID: 1462662630}
-  debugVector: {x: 0, y: 0, z: 0}
---- !u!4 &1496319722
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496319720}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6522028, y: -0.5073769, z: -5.2639384}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1520048383
 Mesh:
@@ -6766,26 +6718,13 @@ GameObject:
   - component: {fileID: 1588290685}
   - component: {fileID: 1588290684}
   - component: {fileID: 1588290683}
-  - component: {fileID: 1588290682}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Gravity Volume 1
-  m_TagString: Untagged
+  m_TagString: GravityZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1588290682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588290681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82921d1fa987fff46a223f12cf5b1f74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1588290683
 MonoBehaviour:
   m_ObjectHideFlags: 0

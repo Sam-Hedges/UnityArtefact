@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
@@ -6,55 +7,56 @@ namespace Gravity
 {
     public class GravityManager : MonoBehaviour
     {
-        [SerializeField] private PlayerController player;
         private Rigidbody playerRigidbody;
         [SerializeField] private float gravityStrength = 9.81f;
-        [SerializeField] private List<GravityVolume> gravityVolumes;
         private Vector3 lastGravityVector;
+        private PlayerController player;
         public Vector3 debugVector;
 
-        void Awake()
+        private void Awake()
         {
             Physics.gravity = Vector3.down * gravityStrength;
 
-            foreach (GravityVolume gravityVolume in gravityVolumes) {
-                gravityVolume.SetParentManager(this);
-            }
-
+            player = GetComponent<PlayerController>();
+            
             lastGravityVector = Physics.gravity / gravityStrength;
             
             playerRigidbody = player.gameObject.GetComponent<Rigidbody>();
         }
 
         private void Update() {
-            debugVector = Physics.gravity;
+            debugVector = transform.up;
         }
 
-        public void ChangeGravityDirection(Vector3 newTransformUp) {
-        
-            newTransformUp.Normalize();
+        private void OnTriggerEnter(Collider coll) {
+            if (coll.CompareTag("GravityZone")) { ChangeGravityDirection(coll.transform); }
+        }
+
+        private void OnTriggerExit(Collider coll) {
+            if (coll.CompareTag("GravityZone")) { ResetGravityDirection(coll.transform); }
+        }
+
+        private void ChangeGravityDirection(Transform newTransform) {
+            
             lastGravityVector = Physics.gravity / gravityStrength;
-            Physics.gravity = newTransformUp * gravityStrength;
+            Physics.gravity = -newTransform.up * gravityStrength;
             
-            playerRigidbody.rotation = Quaternion.FromToRotation(player.transform.up, newTransformUp);
-            player.transform.up = newTransformUp;
-            player.upTransform = -newTransformUp;
-            
+            playerRigidbody.rotation = Quaternion.LookRotation(Quaternion.Euler(90, 0, 0) * newTransform.up, newTransform.up);
+            transform.up = newTransform.up;
+            transform.forward = Quaternion.Euler(90, 0, 0) * newTransform.up;
         }
 
-        public void ResetGravityDirection(Vector3 newTransformUp) {
+        private void ResetGravityDirection(Transform newTransform) {
 
-            newTransformUp.Normalize();
-            
-            lastGravityVector = newTransformUp;
+            lastGravityVector = -newTransform.up;
         
             if (Physics.gravity / gravityStrength != lastGravityVector) { return; }
         
             Physics.gravity = Vector3.down * gravityStrength;
             
-            playerRigidbody.rotation = Quaternion.FromToRotation(player.transform.up, Vector3.down);
-            player.transform.up = Vector3.down;
-            player.upTransform = Vector3.up;
+            playerRigidbody.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);;
+            transform.up = Vector3.up;
+            transform.forward = Vector3.forward;
 
         }
     }

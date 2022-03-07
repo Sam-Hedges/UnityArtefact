@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Home
   - Away
+  - GravityZone
   layers:
   - Default
   - TransparentFX
